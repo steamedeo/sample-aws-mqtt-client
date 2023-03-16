@@ -9,6 +9,7 @@ import time
 from uuid import uuid4
 import json
 import random2
+import datetime
 
 # This sample uses the Message Broker for AWS IoT to send and receive messages
 # through an MQTT connection. On startup, the device connects to the server,
@@ -123,9 +124,11 @@ if __name__ == '__main__':
         while (publish_count <= message_count) or (message_count == 0):
             rand_temp = random2.randint(20, 40)
             rand_humidity = random2.randint(50, 100)
+            ts = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             message = {
                 "temperature": rand_temp,
-                "humidity": rand_humidity
+                "humidity": rand_humidity,
+                "ts": ts
             }
             message_json = json.dumps(message)
             mqtt_connection.publish(
